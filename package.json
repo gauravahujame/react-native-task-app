@@ -1,0 +1,35 @@
+{
+  "name": "Playground",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "adb": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:8082 tcp:8082 && adb reverse tcp:8090 tcp:8090 && adb reverse tcp:9090 tcp:9090",
+    "shake": "adb shell input keyevent 82",
+    "rr": "npm run adb && adb shell input text \"rr\""
+  },
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-elements": "^0.19.1",
+    "react-native-linear-gradient": "^2.4.0",
+    "react-native-typography": "^1.3.0",
+    "react-native-vector-icons": "^5.0.0",
+    "react-navigation": "^2.11.2",
+    "redux": "^4.0.0",
+    "redux-logic": "^0.15.4",
+    "redux-persist": "^5.10.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "^5",
+    "jest": "23.5.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

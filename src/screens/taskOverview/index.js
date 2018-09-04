@@ -49,13 +49,13 @@ export default class TaskOverviewScreen extends React.Component {
                     <Icon name="keyboard-arrow-left" color="white" size={28} />
                     <Icon name="more-horiz" color="white" size={28} />
                 </View>
-                <View style={{ padding: 50 }}>
+                <View style={{ paddingLeft: 50, paddingVertical: 30 }}>
                     <Text style={{ fontSize: 34, fontWeight: '600', color: 'white' }}>Hello {this.state.firstName}</Text>
                     <Text style={{ fontSize: 14, fontWeight: '400', color: 'white' }}>
                         Nice to see you again
                     </Text>
                 </View>
-                <View style={{ flex: 0.7, justifyContent: 'center' }}>
+                <View style={{ justifyContent: 'center' }}>
                     <FlatList
                         data={this.state.lists}
                         keyExtractor={(item, index) => index.toString()}
@@ -65,11 +65,6 @@ export default class TaskOverviewScreen extends React.Component {
                         onViewableItemsChanged={this.setActiveColor}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({item}) => <CategoryTile item={item} navigation={navigation} />} />
-                </View>
-                <View style={{ alignItems: 'stretch', alignSelf: 'center', position: 'absolute', bottom: 30 }}>
-                    {/* <Text style={{ fontSize: 12, fontWeight: '400', color: 'white', textAlign: 'center' }}>
-                        Already a member?
-                    </Text> */}
                 </View>
             </View>
         );

@@ -1,9 +1,11 @@
-import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, TabNavigator } from 'react-navigation';
-import { SplashScreen } from '../screens';
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
+import { TaskOverviewScreen, TaskDetailsScreen, CreateTaskGroupScreen } from '../screens';
 
 export default createStackNavigator(
     {
-        Splash: SplashScreen,
+        TaskOverview: TaskOverviewScreen,
+        TaskDetail: TaskDetailsScreen,
+        CreateTaskGroup: CreateTaskGroupScreen,
     },
     {
         headerMode: 'none'

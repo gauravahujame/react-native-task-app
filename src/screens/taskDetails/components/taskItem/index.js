@@ -27,7 +27,7 @@ export default class TaskItem extends React.Component {
                     size={28}
                     containerStyle={{ marginRight: 20 }} />
                 <View>
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: 'black' }}>{title}</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '500', color: 'black', textDecorationLine: checked ? 'line-through' : null }}>{title}</Text>
                     <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>{time}</Text>
                 </View>
             </TouchableOpacity>

@@ -40,7 +40,7 @@ export default class CreateTaskGroupScreen extends React.Component {
 
     changeTaskColor() {
         const color = _.sample(colors);
-        this.setState({ taskColor: color});
+        this.setState({ taskColor: color });
     }
 
     render() {
@@ -63,7 +63,7 @@ export default class CreateTaskGroupScreen extends React.Component {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
                     <TouchableOpacity
-                        style={{ height: 35, width: 35, margin: 10, borderRadius: 20, backgroundColor: taskColor}}
+                        style={{ height: 35, width: 35, margin: 10, borderRadius: 20, backgroundColor: taskColor }}
                         onPress={() => this.changeTaskColor()} />
                     <TextInput
                         autoFocus
@@ -86,18 +86,13 @@ export default class CreateTaskGroupScreen extends React.Component {
                             )} />
                     )}
                 </View>
-                
+
                 <FloatingAction
                     color={taskColor}
                     showBackground={false}
                     visible={!isCreatingTask}
                     listenKeyboard
                     position="center"
-                    children={!this.state.tasks.length && (
-                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
-                            Lets add a task to this list
-                        </Text>
-                    )}
                     floatingIcon={<Icon name="plus" type="feather" color="white" />}
                     onPressMain={() => this.setState({ isCreatingTask: !isCreatingTask })}
                 />
@@ -107,6 +102,13 @@ export default class CreateTaskGroupScreen extends React.Component {
                         createTask={this.createTask}
                         taskColor={taskColor} />
                 )}
+                {/* {!this.state.tasks.length && (
+                    <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
+                            Lets add a task to this list
+                        </Text>
+                    </View>
+                )} */}
             </View>
         );
     }

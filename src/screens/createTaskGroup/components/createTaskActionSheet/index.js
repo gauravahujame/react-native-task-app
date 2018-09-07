@@ -23,7 +23,7 @@ export default class CreateTaskActionSheet extends React.Component {
         const { title, date, time, repeat } = this.state;
         const { hideActionSheet, createTask, taskColor } = this.props;
         return (
-            <View style={{ width: '100%', elevation: 2, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#42424202' }}>
+            <View style={{ width: '100%', elevation: 0, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#42424202' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                     <Text style={{ fontSize: 16, color: '#424242' }}>Add Task</Text>
                     <Icon name="close" onPress={() => hideActionSheet()} containerStyle={{ paddingHorizontal: 10 }} />
@@ -31,6 +31,7 @@ export default class CreateTaskActionSheet extends React.Component {
                 <Divider style={{ backgroundColor: '#42424210' }} />
                 <TextInput
                     placeholder="Describe task"
+                    autoFocus
                     value={title}
                     style={{ fontSize: 16, fontWeight: '600', color: 'black' }}
                     onChangeText={(input) => this.setState({ title: input })} />

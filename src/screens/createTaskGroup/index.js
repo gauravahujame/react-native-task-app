@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, StatusBar, StyleSheet, TextInput, FlatList } from 'react-native';
-import { Text, Icon, Button, Divider } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
+import { Text, Icon, Divider } from 'react-native-elements';
+import { FloatingAction } from 'react-native-floating-action';
 import _ from 'lodash';
 
+import { colors } from '../../data/colors';
+import TaskItem from '../taskDetails/components/taskItem';
+import CreateTaskActionSheet from './components/createTaskActionSheet';
 
 export default class CreateTaskGroupScreen extends React.Component {
     static navigationOptions = {
@@ -12,21 +15,33 @@ export default class CreateTaskGroupScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.hideActionSheet = this.hideActionSheet.bind(this);
+        this.createTask = this.createTask.bind(this);
         this.state = {
             title: null,
-            tasks: [
-                {
-                    title: '',
-                    time: null,
-                },
-            ]
+            isCreatingTask: true,
+            tasks: [],
+            isEditingTitle: true,
         }
+    }
+
+    createTask(task) {
+        const newTask = { title: task.title, time: task.time };
+        this.setState(prevState => ({
+            tasks: [...prevState.tasks, newTask],
+            isCreatingTask: false,
+        }));
+    }
+
+    hideActionSheet() {
+        this.setState({ isCreatingTask: false });
     }
 
     render() {
         const { navigation } = this.props;
+        const { isCreatingTask, isEditingTitle, title } = this.state;
         return (
-            <View style={{ flex: 1, backgroundColor: gray }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar
                     hidden
                     barStyle="light-content"
@@ -40,46 +55,53 @@ export default class CreateTaskGroupScreen extends React.Component {
                     <Icon name="keyboard-arrow-left" color="white" size={28} onPress={() => navigation.goBack()} />
                     <Icon name="more-horiz" color="white" size={28} />
                 </View>
-                <View style={{ paddingLeft: 50, paddingTop: 50 }}>
+                <View style={{ paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
                     <TextInput
-                        height={80}
-                        placeholder="List Name"
-                        placeholderTextColor="#ffffff20"
                         autoFocus
+                        selectionColor={taskColor}
+                        placeholder="List Name"
                         value={this.state.title}
-                        style={{ fontSize: 34, fontWeight: '600', color: 'white' }}
+                        style={{ fontSize: 34, fontWeight: '600', color: 'black' }}
                         onChangeText={(input) => this.setState({ title: input })} />
-                    <Text style={{ fontSize: 14, fontWeight: '400', color: '#ffffff99' }}>
-                        Lets add a task to this list
-                    </Text>
                 </View>
                 <Divider style={{ backgroundColor: '#42424220', marginVertical: 10, marginLeft: 50 }} />
                 <View style={{ alignSelf: 'flex-start', paddingLeft: 50 }}>
-                    <FlatList
-                        data={this.state.tasks}
-                        keyExtractor={(item, index) => index.toString()}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item }) => (
-                            <View style={{ paddingVertical: 15, flexDirection: 'row' }}>
-                                <Icon name="alarm-add" color='#fff' size={28} containerStyle={{ marginRight: 20 }} />
-                                <View>
-                                    <TextInput
-                                        height={40}
-                                        borderBottomWidth={1}
-                                        borderBottomColor="white"
-                                        style={{ fontSize: 18, fontWeight: '500', color: 'white', width: 400 }}
-                                        onChangeText={(input) => this.setState({ tasks: [{ title: input }] })} />
-                                    {/* <Text style={{ fontSize: 12, fontWeight: '400', color: 'black' }}>{item.time}</Text> */}
-                                </View>
-                            </View>
-                        )} />
+                    {!this.state.tasks.length && (
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
+                            Lets add a task to this list
+                        </Text>
+                    )}
+                    {this.state.tasks.length > 0 && (
+                        <FlatList
+                            data={this.state.tasks}
+                            keyExtractor={(item, index) => index.toString()}
+                            showsVerticalScrollIndicator={false}
+                            extraData={this.state.tasks}
+                            renderItem={({ item }) => (
+                                <TaskItem task={item} color={taskColor} />
+                            )} />
+                    )}
                 </View>
+                <FloatingAction
+                    color={taskColor}
+                    showBackground={false}
+                    visible={!isCreatingTask}
+                    listenKeyboard
+                    floatingIcon={<Icon name="add" color="white" />}
+                    onPressMain={() => this.setState({ isCreatingTask: !isCreatingTask })}
+                />
+                {isCreatingTask && (
+                    <CreateTaskActionSheet
+                        hideActionSheet={this.hideActionSheet}
+                        createTask={this.createTask}
+                        taskColor={taskColor} />
+                )}
             </View>
         );
     }
 }
 
-const gray = '#636364';
+const taskColor = _.sample(colors);
 
 const styles = StyleSheet.create({
 

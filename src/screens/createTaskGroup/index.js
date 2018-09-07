@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, StyleSheet, TextInput, FlatList } from 'react-native';
+import { View, StatusBar, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import { Text, Icon, Divider } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
 import _ from 'lodash';
@@ -19,9 +19,10 @@ export default class CreateTaskGroupScreen extends React.Component {
         this.createTask = this.createTask.bind(this);
         this.state = {
             title: null,
-            isCreatingTask: true,
+            isCreatingTask: false,
             tasks: [],
             isEditingTitle: true,
+            taskColor: _.sample(colors),
         }
     }
 
@@ -37,9 +38,14 @@ export default class CreateTaskGroupScreen extends React.Component {
         this.setState({ isCreatingTask: false });
     }
 
+    changeTaskColor() {
+        const color = _.sample(colors);
+        this.setState({ taskColor: color});
+    }
+
     render() {
         const { navigation } = this.props;
-        const { isCreatingTask, isEditingTitle, title } = this.state;
+        const { isCreatingTask, isEditingTitle, title, taskColor } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar
@@ -55,22 +61,20 @@ export default class CreateTaskGroupScreen extends React.Component {
                     <Icon name="keyboard-arrow-left" color="white" size={28} onPress={() => navigation.goBack()} />
                     <Icon name="more-horiz" color="white" size={28} />
                 </View>
-                <View style={{ paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
+                    <TouchableOpacity
+                        style={{ height: 35, width: 35, margin: 10, borderRadius: 20, backgroundColor: taskColor}}
+                        onPress={() => this.changeTaskColor()} />
                     <TextInput
                         autoFocus
                         selectionColor={taskColor}
                         placeholder="List Name"
                         value={this.state.title}
-                        style={{ fontSize: 34, fontWeight: '600', color: 'black' }}
+                        style={{ flex: 1, fontSize: 34, fontWeight: '600', color: 'black' }}
                         onChangeText={(input) => this.setState({ title: input })} />
                 </View>
                 <Divider style={{ backgroundColor: '#42424220', marginVertical: 10, marginLeft: 50 }} />
                 <View style={{ alignSelf: 'flex-start', paddingLeft: 50 }}>
-                    {!this.state.tasks.length && (
-                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
-                            Lets add a task to this list
-                        </Text>
-                    )}
                     {this.state.tasks.length > 0 && (
                         <FlatList
                             data={this.state.tasks}
@@ -82,12 +86,19 @@ export default class CreateTaskGroupScreen extends React.Component {
                             )} />
                     )}
                 </View>
+                
                 <FloatingAction
                     color={taskColor}
                     showBackground={false}
                     visible={!isCreatingTask}
                     listenKeyboard
-                    floatingIcon={<Icon name="add" color="white" />}
+                    position="center"
+                    children={!this.state.tasks.length && (
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
+                            Lets add a task to this list
+                        </Text>
+                    )}
+                    floatingIcon={<Icon name="plus" type="feather" color="white" />}
                     onPressMain={() => this.setState({ isCreatingTask: !isCreatingTask })}
                 />
                 {isCreatingTask && (
@@ -101,7 +112,6 @@ export default class CreateTaskGroupScreen extends React.Component {
     }
 }
 
-const taskColor = _.sample(colors);
 
 const styles = StyleSheet.create({
 

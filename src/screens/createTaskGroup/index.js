@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, StatusBar, StyleSheet, TextInput, FlatList, TouchableOpacity, Keyboard } from 'react-native';
 import { Text, Icon, Divider } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ import { colors } from '../../data/colors';
 import TaskItem from '../taskDetails/components/taskItem';
 import CreateTaskActionSheet from './components/createTaskActionSheet';
 
+// add text shadow under title
 export default class CreateTaskGroupScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -19,11 +20,19 @@ export default class CreateTaskGroupScreen extends React.Component {
         this.createTask = this.createTask.bind(this);
         this.state = {
             title: null,
-            isCreatingTask: false,
+            isCreatingTask: true,
             tasks: [],
             isEditingTitle: true,
             taskColor: _.sample(colors),
         }
+    }
+
+    componentDidMount() {
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.hideActionSheet);
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidHideListener.remove();
     }
 
     createTask(task) {
@@ -35,7 +44,9 @@ export default class CreateTaskGroupScreen extends React.Component {
     }
 
     hideActionSheet() {
-        this.setState({ isCreatingTask: false });
+        if(this.state.isCreatingTask){
+            this.setState({ isCreatingTask: false });
+        }
     }
 
     changeTaskColor() {
@@ -59,7 +70,7 @@ export default class CreateTaskGroupScreen extends React.Component {
                     backgroundColor: '#00000020'
                 }}>
                     <Icon name="keyboard-arrow-left" color="white" size={28} onPress={() => navigation.goBack()} />
-                    <Icon name="more-horiz" color="white" size={28} />
+                    <Icon name="done" color={taskColor} size={28} />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
                     <TouchableOpacity
@@ -73,7 +84,14 @@ export default class CreateTaskGroupScreen extends React.Component {
                         style={{ flex: 1, fontSize: 34, fontWeight: '600', color: 'black' }}
                         onChangeText={(input) => this.setState({ title: input })} />
                 </View>
-                <Divider style={{ backgroundColor: '#42424220', marginVertical: 10, marginLeft: 50 }} />
+                <Divider style={{ height: 2, backgroundColor: '#42424220', marginVertical: 10, marginLeft: 50 }} />
+                {!this.state.tasks.length && !isCreatingTask && (
+                    <View style={{ paddingTop: 35, alignSelf: 'center' }}>
+                        <Text style={{ fontSize: 18, fontWeight: '500', color: '#00000099' }}>
+                            Let's start with adding a note
+                        </Text>
+                    </View>
+                )}
                 <View style={{ alignSelf: 'flex-start', paddingLeft: 50 }}>
                     {this.state.tasks.length > 0 && (
                         <FlatList
@@ -102,13 +120,6 @@ export default class CreateTaskGroupScreen extends React.Component {
                         createTask={this.createTask}
                         taskColor={taskColor} />
                 )}
-                {/* {!this.state.tasks.length && (
-                    <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
-                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#00000099' }}>
-                            Lets add a task to this list
-                        </Text>
-                    </View>
-                )} */}
             </View>
         );
     }

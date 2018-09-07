@@ -60,7 +60,7 @@ export default class CategoryTile extends React.Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <Text style={{ fontSize: 14, fontWeight: '500', color: 'white', paddingTop: 10, paddingBottom: 5, paddingLeft: 80 }}>Due Today</Text>
+                <Text style={{ fontSize: 14, fontWeight: '500', color: 'white', marginTop: 20, paddingBottom: 5, paddingLeft: 80 }}>Due Today</Text>
                 <Divider style={{ backgroundColor: '#42424220', marginLeft: 80, marginRight: 20, marginBottom: 10, height: 2 }} />
                 <FlatList
                     data={pendingTasks}

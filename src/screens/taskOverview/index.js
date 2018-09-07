@@ -20,7 +20,7 @@ export default class TaskOverviewScreen extends React.Component {
         this.viewableThreshold = { viewAreaCoveragePercentThreshold: 50 };
         this.state = {
             firstName: 'Jensen',
-            activeColor: '#568cff',
+            activeColor: lists[0].color,
             lists: lists,
         }
     }
@@ -58,8 +58,8 @@ export default class TaskOverviewScreen extends React.Component {
                         avatarStyle={{ borderWidth: 2, borderColor: 'white' }} />
                     <View style={{ width: 15 }} />
                     <View>
-                        <Text style={{ fontSize: 34, fontWeight: '600', color: 'white' }}>Hello {this.state.firstName}</Text>
-                        <Text style={{ fontSize: 14, fontWeight: '400', color: 'white' }}>
+                        <Text style={{ fontSize: 34, fontWeight: '600', color: 'white', marginBottom: 3 }}>Hello {this.state.firstName}</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: 'white', letterSpacing: 0.5 }}>
                             Nice to see you again
                         </Text>
                     </View>

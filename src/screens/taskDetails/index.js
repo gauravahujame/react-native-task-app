@@ -5,8 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 
 import TaskItem from './components/taskItem';
-
-export default class TaskDetailsScreen extends React.Component {
+class TaskDetailsScreen extends React.Component {
     static navigationOptions = {
         header: null,
     }
@@ -80,3 +79,5 @@ const lightBlue = '#568cff';
 const styles = StyleSheet.create({
 
 })
+
+export default TaskDetailsScreen;

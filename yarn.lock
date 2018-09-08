@@ -228,6 +228,13 @@
     "@babel/helper-replace-supers" "7.0.0-beta.47"
     "@babel/plugin-syntax-class-properties" "7.0.0-beta.47"
 
+"@babel/plugin-proposal-decorators@7.0.0-beta.47":
+  version "7.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-decorators/-/plugin-proposal-decorators-7.0.0-beta.47.tgz#5e8943c8f8eb3301f911ef0dcd3ed64cf28c723e"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.47"
+    "@babel/plugin-syntax-decorators" "7.0.0-beta.47"
+
 "@babel/plugin-proposal-object-rest-spread@7.0.0-beta.47":
   version "7.0.0-beta.47"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.0.0-beta.47.tgz#e1529fddc88e948868ee1d0edaa27ebd9502322d"
@@ -245,6 +252,12 @@
 "@babel/plugin-syntax-class-properties@7.0.0-beta.47":
   version "7.0.0-beta.47"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0-beta.47.tgz#de52bed12fd472c848e1562f57dd4a202fe27f11"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.47"
+
+"@babel/plugin-syntax-decorators@7.0.0-beta.47":
+  version "7.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-7.0.0-beta.47.tgz#a42f10fcd651940bc475d93b3ac23432b4a8a293"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.47"
 
@@ -412,6 +425,13 @@
   dependencies:
     regenerator-transform "^0.12.3"
 
+"@babel/plugin-transform-runtime@7.0.0-beta.47":
+  version "7.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.0.0-beta.47.tgz#1700938fa8710909cbf28f7dd39f9b40688b09fd"
+  dependencies:
+    "@babel/helper-module-imports" "7.0.0-beta.47"
+    "@babel/helper-plugin-utils" "7.0.0-beta.47"
+
 "@babel/plugin-transform-shorthand-properties@7.0.0-beta.47":
   version "7.0.0-beta.47"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-7.0.0-beta.47.tgz#00be44c4fad8fe2c00ed18ea15ea3c88dd519dbb"
@@ -457,6 +477,13 @@
     mkdirp "^0.5.1"
     pirates "^3.0.1"
     source-map-support "^0.4.2"
+
+"@babel/runtime@7.0.0-beta.47":
+  version "7.0.0-beta.47"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.47.tgz#273f5e71629e80f6cbcd7507503848615e59f7e0"
+  dependencies:
+    core-js "^2.5.3"
+    regenerator-runtime "^0.11.1"
 
 "@babel/template@7.0.0-beta.47":
   version "7.0.0-beta.47"
@@ -3649,6 +3676,23 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mobx-persist@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/mobx-persist/-/mobx-persist-0.4.1.tgz#fe5790eda04e0ee0b91c512d1347104e09363f9a"
+  dependencies:
+    serializr "^1.1.11"
+
+mobx-react@^5.1.0:
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.2.6.tgz#1acf6bbbf4f3b52874b91ff4a1d49fc3aae9a5d5"
+  dependencies:
+    hoist-non-react-statics "^2.5.0"
+    react-lifecycles-compat "^3.0.2"
+
+mobx@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.3.1.tgz#334e5aab4916b1d43f0faf3605a64b1b4b3ccb8d"
+
 moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
@@ -4233,7 +4277,7 @@ react-is@^16.4.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
-react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
+react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
@@ -4549,7 +4593,7 @@ regenerator-runtime@^0.10.0:
   version "0.10.5"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
-regenerator-runtime@^0.11.0:
+regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
@@ -4823,6 +4867,10 @@ send@0.16.2:
 serialize-error@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/serialize-error/-/serialize-error-2.1.0.tgz#50b679d5635cdf84667bdc8e59af4e5b81d5f60a"
+
+serializr@^1.1.11:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/serializr/-/serializr-1.3.0.tgz#6c7f977461d54a24bb1f17a03ed0ce61d239b010"
 
 serve-static@^1.13.1:
   version "1.13.2"

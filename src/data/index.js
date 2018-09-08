@@ -1,4 +1,4 @@
-export const lists = [
+export const tasks = [
     {
         title: 'Everyday',
         pendingCount: 14,

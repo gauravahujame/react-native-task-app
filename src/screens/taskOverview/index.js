@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, StatusBar, StyleSheet, FlatList } from 'react-native';
-import { Text, Icon, Button, Avatar } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
+import { Text, Icon, Avatar } from 'react-native-elements';
+import { inject, observer } from 'mobx-react/native';
 import _ from 'lodash';
 
 import CategoryTile from './components/categoryTile';
 import AddTile from './components/addTile';
 
-import { lists } from '../../data';
-
-export default class TaskOverviewScreen extends React.Component {
+@inject('taskStore') @observer
+class TaskOverviewScreen extends React.Component {
     static navigationOptions = {
         header: null,
     }
@@ -18,13 +17,16 @@ export default class TaskOverviewScreen extends React.Component {
         super(props);
         this.setActiveColor = this.setActiveColor.bind(this);
         this.viewableThreshold = { viewAreaCoveragePercentThreshold: 50 };
+
+        const { tasks } = props.taskStore;
+
         this.state = {
             firstName: 'Jensen',
-            activeColor: lists[0].color,
-            lists: lists,
+            activeColor: tasks[0].color,
+            lists: tasks,
         }
     }
-    
+
     setActiveColor(data) {
         const item = _.get(data, 'viewableItems[0].item', { color: gray });
         if (item) {
@@ -53,7 +55,7 @@ export default class TaskOverviewScreen extends React.Component {
                     <Avatar
                         medium
                         rounded
-                        source={{uri: "https://randomuser.me/api/portraits/men/75.jpg"}}
+                        source={{ uri: "https://randomuser.me/api/portraits/men/75.jpg" }}
                         containerStyle={{ elevation: 5 }}
                         avatarStyle={{ borderWidth: 2, borderColor: 'white' }} />
                     <View style={{ width: 15 }} />
@@ -73,7 +75,7 @@ export default class TaskOverviewScreen extends React.Component {
                         viewabilityConfig={this.viewableThreshold}
                         onViewableItemsChanged={this.setActiveColor}
                         showsHorizontalScrollIndicator={false}
-                        renderItem={({item}) => <CategoryTile item={item} navigation={navigation} />} />
+                        renderItem={({ item }) => <CategoryTile item={item} navigation={navigation} />} />
                 </View>
             </View>
         );
@@ -87,3 +89,5 @@ const gray = '#636364';
 const styles = StyleSheet.create({
 
 })
+
+export default TaskOverviewScreen;

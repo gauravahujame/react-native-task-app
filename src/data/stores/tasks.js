@@ -19,8 +19,8 @@ export default class TaskStore {
         return this.tasks.length - this.activeTaskCount;
     }
 
-    addTask(title, time, category) {
-        this.tasks.push(new TaskModel(this, uuid.v4(), title, time, false, category));
+    addTask(title, time) {
+        this.tasks.push(new TaskModel(this, uuid.v4(), title, time, false));
     }
 
     toggleAll(checked) {

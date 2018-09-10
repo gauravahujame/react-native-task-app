@@ -6,6 +6,8 @@ import * as Progress from 'react-native-progress';
 import _ from 'lodash';
 
 import TaskItemSmall from '../components/taskItemSmall';
+import { inject, observer } from 'mobx-react/native';
+
 export default class CategoryTile extends React.Component {
     static navigationOptions = {
         header: null,
@@ -20,10 +22,10 @@ export default class CategoryTile extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const { title, color, tasks } = this.props.item;
-        const totalCount = tasks.length;
-        const pendingTasks = tasks.filter(item => item.completed === false);
-        const pendingCount = pendingTasks.length;
+        const { id, title, color, tasks } = this.props.item;
+        const totalCount = tasks ? tasks.length : 0;
+        const pendingTasks = tasks ? tasks.filter(item => item.completed === false) : [];
+        const pendingCount = pendingTasks.length || 0;
         return (
             <View>
                 <TouchableOpacity

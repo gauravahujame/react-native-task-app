@@ -6,15 +6,13 @@ export default class TaskModel {
 	@observable title;
 	@observable time;
 	@observable completed;
-	@observable category;
 
-	constructor(store, id, title, time, completed, category) {
+	constructor(store, id, title, time, completed) {
 		this.store = store;
 		this.id = id;
         this.title = title;
         this.time = time;
         this.completed = completed;
-        this.category = category;
 	}
 
 	toggle() {
@@ -33,21 +31,16 @@ export default class TaskModel {
         this.time = time;
     }
 
-    setCategory(category) {
-        this.category = category;
-    }
-
 	toJS() {
 		return {
 			id: this.id,
             title: this.title,
             time: this.time,
             completed: this.completed,
-            category: this.category,
 		};
 	}
 
 	static fromJS(store, object) {
-		return new TodoModel(store, object.id, object.title, object.time, object.completed, object.category);
+		return new TaskModel(store, object.id, object.title, object.time, object.completed);
 	}
 }

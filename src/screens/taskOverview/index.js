@@ -7,7 +7,7 @@ import _ from 'lodash';
 import CategoryTile from './components/categoryTile';
 import AddTile from './components/addTile';
 
-@inject('taskStore') @observer
+@inject('listStore', 'appStore') @observer
 class TaskOverviewScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -18,12 +18,8 @@ class TaskOverviewScreen extends React.Component {
         this.setActiveColor = this.setActiveColor.bind(this);
         this.viewableThreshold = { viewAreaCoveragePercentThreshold: 50 };
 
-        const { tasks } = props.taskStore;
-
         this.state = {
-            firstName: 'Jensen',
-            activeColor: tasks[0].color,
-            lists: tasks,
+            activeColor: props.listStore.lists[0].color,
         }
     }
 
@@ -36,12 +32,15 @@ class TaskOverviewScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
+        const { lists } = this.props.listStore;
+        const { user } = this.props.appStore;
+
         return (
             <View style={{ flex: 1, backgroundColor: this.state.activeColor }}>
                 <StatusBar
                     hidden
                     barStyle="light-content"
-                    backgroundColor="#568cff" />
+                    backgroundColor={this.state.activeColor} />
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -55,12 +54,12 @@ class TaskOverviewScreen extends React.Component {
                     <Avatar
                         medium
                         rounded
-                        source={{ uri: "https://randomuser.me/api/portraits/men/75.jpg" }}
+                        source={{ uri: user.avatar }}
                         containerStyle={{ elevation: 5 }}
                         avatarStyle={{ borderWidth: 2, borderColor: 'white' }} />
                     <View style={{ width: 15 }} />
                     <View>
-                        <Text style={{ fontSize: 34, fontWeight: '600', color: 'white', marginBottom: 3 }}>Hello {this.state.firstName}</Text>
+                        <Text style={{ fontSize: 34, fontWeight: '600', color: 'white', marginBottom: 3 }}>Hello {user.firstName}</Text>
                         <Text style={{ fontSize: 14, fontWeight: '400', color: 'white', letterSpacing: 0.5 }}>
                             Nice to see you again
                         </Text>
@@ -68,7 +67,7 @@ class TaskOverviewScreen extends React.Component {
                 </View>
                 <View style={{ justifyContent: 'center' }}>
                     <FlatList
-                        data={this.state.lists}
+                        data={lists}
                         keyExtractor={(item, index) => index.toString()}
                         horizontal
                         ListFooterComponent={<AddTile navigation={navigation} />}
@@ -82,8 +81,6 @@ class TaskOverviewScreen extends React.Component {
     }
 }
 
-
-const lightBlue = '#568cff';
 const gray = '#636364';
 
 const styles = StyleSheet.create({

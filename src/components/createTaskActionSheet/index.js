@@ -8,7 +8,7 @@ export default class CreateTaskActionSheet extends React.Component {
         super(props);
         this.state = {
             title: undefined,
-            time: undefined,
+            time: 'never',
             frequency: false,
             isDateTimePickerVisible: false,
         }
@@ -59,8 +59,8 @@ export default class CreateTaskActionSheet extends React.Component {
                         <Picker.Item label="Tomorrow" value="tomorrow" />
                         <Picker.Item label="Next Friday" value="next-week" />
                         <Picker.Item label="Weekend" value="weekend" />
-                        <Picker.Item label="Let me pick a time" value="custom" onPress={() => alert('custom')} />
-                        <Picker.Item label="Don't really care" value="never" />
+                        <Picker.Item label="Let me pick a time" value="custom" />
+                        <Picker.Item label="Never" value="never" />
                     </Picker>
                     <Picker
                         selectedValue={frequency}

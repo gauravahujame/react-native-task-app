@@ -24,11 +24,6 @@ export default class ListStore {
         this.lists.push(newList);
     }
 
-    @action addTask(listId, title, time) {
-        const list = this.lists.filter(list => list.id === listId);
-        list.tasks.push(new TaskModel(this, uuid.v4(), title, time, false));
-    }
-
     toJS() {
         return this.lists.map(list => list.toJS());
     }

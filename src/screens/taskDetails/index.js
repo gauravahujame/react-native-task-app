@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, StatusBar, StyleSheet, FlatList, TextInput } from 'react-native';
-import { Text, Icon, Button, Divider } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
-import _ from 'lodash';
+import { Text, Icon, Divider } from 'react-native-elements';
+import { FloatingAction } from 'react-native-floating-action';
+import { inject, observer } from 'mobx-react/native';
+
 
 import TaskItem from './components/taskItem';
+import CreateTaskActionSheet from '../../components/createTaskActionSheet';
+
+@inject('listStore') @observer
 class TaskDetailsScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -12,18 +16,37 @@ class TaskDetailsScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.hideActionSheet = this.hideActionSheet.bind(this);
+        this.createTask = this.createTask.bind(this);
+        this.list = props.navigation.getParam('list');
         this.state = {
-            firstName: 'Gaurav',
-            category: props.navigation.getParam('category', null),
-            color: props.navigation.getParam('color', '#636364'),
-            tasks: props.navigation.getParam('tasks', []),
+            title: this.list.title,
             isEditing: false,
+            isCreatingTask: false,
+        }
+    }
+
+    createTask(task) {
+        this.list.addTask({ title: task.title, time: task.time, completed: false });
+        this.setState({ isCreatingTask: false });
+    }
+
+    renameList() {
+        this.list.setTitle(this.state.title);
+        this.setState({ isEditing: false });
+    }
+
+    hideActionSheet() {
+        if (this.state.isCreatingTask) {
+            this.setState({ isCreatingTask: false });
         }
     }
 
     render() {
         const { navigation } = this.props;
-        const { color, category, isEditing } = this.state;
+        const { color } = this.list;
+
+        const { isEditing, isCreatingTask, title } = this.state;
         const pendingCount = navigation.getParam('pendingCount', null);
         const totalCount = navigation.getParam('totalCount', null);
         return (
@@ -42,39 +65,52 @@ class TaskDetailsScreen extends React.Component {
                     <Icon name="more-horiz" color="white" size={28} />
                 </View>
                 <View style={{ paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
-                        {!isEditing && (
-                            <Text style={{ fontSize: 34, fontWeight: '600', color: 'black' }} onPress={() => this.setState({ isEditing: true })}>{category}</Text>
-                        )}
-                        {isEditing && (
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <TextInput
-                                    autoFocus
-                                    selectionColor={color}
-                                    value={this.state.category}
-                                    style={{ fontSize: 34, fontWeight: '600', color: 'black' }}
-                                    onChangeText={(input) => this.setState({ category: input })} />
-                                <Icon name="done" color={color} size={28} onPress={() => this.setState({ isEditing: false })} />                                
-                            </View>
-                        )}
+                    {!isEditing && (
+                        <Text style={{ fontSize: 34, fontWeight: '600', color: 'black' }} onPress={() => this.setState({ isEditing: true })}>{title}</Text>
+                    )}
+                    {isEditing && (
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TextInput
+                                autoFocus
+                                selectionColor={color}
+                                value={title}
+                                style={{ flex: 1, fontSize: 34, fontWeight: '600', color: 'black' }}
+                                onChangeText={(input) => this.setState({ title: input })} />
+                            <Icon name="done" color={color} size={28} onPress={() => this.renameList()} />
+                        </View>
+                    )}
                     <Text style={{ fontSize: 14, fontWeight: '400', color: '#424242' }}>
                         {pendingCount} of {totalCount} tasks
                     </Text>
                 </View>
                 <Divider style={{ backgroundColor: '#42424220', marginVertical: 10, marginLeft: 50 }} />
                 <FlatList
-                    data={this.state.tasks}
+                    data={this.list.tasks}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
                     style={{ alignSelf: 'flex-start', paddingLeft: 50 }}
                     renderItem={({ item }) => (
                         <TaskItem task={item} color={color} />
                     )} />
+                <FloatingAction
+                    color={color}
+                    showBackground={false}
+                    visible={!isCreatingTask}
+                    listenKeyboard
+                    position="center"
+                    floatingIcon={<Icon name="plus" type="feather" color="white" />}
+                    onPressMain={() => this.setState({ isCreatingTask: !isCreatingTask })}
+                />
+                {isCreatingTask && (
+                    <CreateTaskActionSheet
+                        hideActionSheet={this.hideActionSheet}
+                        createTask={this.createTask}
+                        taskColor={color} />
+                )}
             </View>
         );
     }
 }
-
-const lightBlue = '#568cff';
 
 const styles = StyleSheet.create({
 

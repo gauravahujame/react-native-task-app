@@ -28,11 +28,9 @@ export default class CategoryTile extends React.Component {
                 <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => navigation.push('TaskDetail', {
-                        category: title,
-                        pendingCount: pendingCount,
-                        totalCount: totalCount,
-                        color: color,
-                        tasks: tasks,
+                        list: this.props.item,
+                        pendingCount: pendingCount,         // REMOVE, calc in store
+                        totalCount: totalCount,             // REMOVE, calc in store
                     })}
                     style={{
                         height: tileSize,

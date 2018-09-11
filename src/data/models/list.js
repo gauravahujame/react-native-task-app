@@ -1,4 +1,5 @@
 import { observable, computed } from 'mobx';
+import uuid from 'uuid';
 import TaskModel from './task';
 
 export default class ListModel {
@@ -23,10 +24,10 @@ export default class ListModel {
     setColor(color) {
         this.color = color;
 	}
-	
-	addTask(task) {
-		this.tasks = this.tasks.push(new TaskModel(this, uuid.v4(), ...task));
-	}
+
+	addTask({ title, time, completed }) {
+		this.tasks.push(new TaskModel(this, uuid.v4(), title, time, completed));
+    }
 
 	toJS() {
 		return {

@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 import { colors } from '../../data/colors';
 import TaskItem from '../taskDetails/components/taskItem';
-import CreateTaskActionSheet from './components/createTaskActionSheet';
+import CreateTaskActionSheet from '../../components/createTaskActionSheet';
 
 // add text shadow under title
 @inject('listStore', 'appStore') @observer

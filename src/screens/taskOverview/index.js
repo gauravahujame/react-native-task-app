@@ -67,8 +67,7 @@ class TaskOverviewScreen extends React.Component {
                 </View>
                 <View style={{ justifyContent: 'center' }}>
                     <FlatList
-                        data={lists}
-                        extraData={this.props.listStore.lists.toJS()}
+                        data={lists.toJS()}
                         keyExtractor={(item, index) => index.toString()}
                         horizontal
                         ListFooterComponent={<AddTile navigation={navigation} />}

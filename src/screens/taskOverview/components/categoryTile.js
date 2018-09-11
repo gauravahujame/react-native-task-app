@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
 import { Text, Divider } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 
 import TaskItemSmall from '../components/taskItemSmall';
 
+@observer
 export default class CategoryTile extends React.Component {
     static navigationOptions = {
         header: null,
@@ -18,6 +20,7 @@ export default class CategoryTile extends React.Component {
     }
 
     render() {
+        // alert(JSON.stringify(this.props.item.tasks))
         const { navigation } = this.props;
         const { id, title, color, tasks } = this.props.item;
         const totalCount = tasks ? tasks.length : 0;

@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import uuid from 'uuid';
 
 import ListModel from '../models/list';
@@ -7,7 +7,7 @@ import { lists } from '../index';
 
 
 export default class ListStore {
-    @observable lists = lists;
+    @observable lists = [];
 
     totalCount(listId) {
         const list = this.lists.filter(list => list.id === listId);
@@ -20,7 +20,8 @@ export default class ListStore {
     }
 
     @action addList(list) {
-        this.lists.push(new ListModel(this, uuid.v4(), ...list));
+        const newList = new ListModel(this, uuid.v4(), list.title, list.color, list.tasks);
+        this.lists.push(newList);
     }
 
     @action addTask(listId, title, time) {
@@ -29,7 +30,7 @@ export default class ListStore {
     }
 
     toJS() {
-        return this.lists.map(task => task.toJS());
+        return this.lists.map(list => list.toJS());
     }
 
     static fromJS(array) {

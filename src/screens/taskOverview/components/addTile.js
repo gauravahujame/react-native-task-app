@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, StatusBar, TextInput, StyleSheet, Animated, Easing, Dimensions, Keyboard, TouchableOpacity } from 'react-native';
-import { Text, Icon, Button } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
-import _ from 'lodash';
+import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 export default class AddTile extends React.Component {
     static navigationOptions = {
@@ -27,6 +25,7 @@ export default class AddTile extends React.Component {
                     width: tileSize,
                     backgroundColor: 'white',
                     marginHorizontal: 20,
+                    marginVertical: 5,
                     padding: 20,
                     justifyContent: 'center',
                     alignItems: 'center',

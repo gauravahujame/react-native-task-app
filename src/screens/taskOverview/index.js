@@ -19,7 +19,7 @@ class TaskOverviewScreen extends React.Component {
         this.viewableThreshold = { viewAreaCoveragePercentThreshold: 50 };
 
         this.state = {
-            activeColor: props.listStore.lists[0].color,
+            activeColor: props.listStore.lists.length ? props.listStore.lists[0].color : '#40404020',
         }
     }
 
@@ -68,6 +68,7 @@ class TaskOverviewScreen extends React.Component {
                 <View style={{ justifyContent: 'center' }}>
                     <FlatList
                         data={lists}
+                        extraData={this.props.listStore.lists.length}
                         keyExtractor={(item, index) => index.toString()}
                         horizontal
                         ListFooterComponent={<AddTile navigation={navigation} />}

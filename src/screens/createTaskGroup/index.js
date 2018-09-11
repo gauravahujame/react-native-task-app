@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StatusBar, StyleSheet, TextInput, FlatList, TouchableOpacity, Keyboard } from 'react-native';
 import { Text, Icon, Divider } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
+import { inject, observer } from 'mobx-react/native';
 import _ from 'lodash';
 
 import { colors } from '../../data/colors';
@@ -9,6 +10,7 @@ import TaskItem from '../taskDetails/components/taskItem';
 import CreateTaskActionSheet from './components/createTaskActionSheet';
 
 // add text shadow under title
+@inject('listStore', 'appStore') @observer
 export default class CreateTaskGroupScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -36,15 +38,20 @@ export default class CreateTaskGroupScreen extends React.Component {
     }
 
     createTask(task) {
-        const newTask = { title: task.title, time: task.time };
+        const newTask = { title: task.title, time: task.time, completed: false };
         this.setState(prevState => ({
             tasks: [...prevState.tasks, newTask],
             isCreatingTask: false,
         }));
     }
 
+    saveList() {
+        this.props.listStore.addList({ title: this.state.title, color: this.state.taskColor, tasks: this.state.tasks });
+        this.props.navigation.goBack();
+    }
+
     hideActionSheet() {
-        if(this.state.isCreatingTask){
+        if (this.state.isCreatingTask) {
             this.setState({ isCreatingTask: false });
         }
     }
@@ -70,7 +77,7 @@ export default class CreateTaskGroupScreen extends React.Component {
                     backgroundColor: '#00000020'
                 }}>
                     <Icon name="keyboard-arrow-left" color="white" size={28} onPress={() => navigation.goBack()} />
-                    <Icon name="done" color={taskColor} size={28} />
+                    <Icon name="done" color={taskColor} size={28} onPress={() => this.saveList()} />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 50, paddingTop: 50, paddingRight: 30 }}>
                     <TouchableOpacity

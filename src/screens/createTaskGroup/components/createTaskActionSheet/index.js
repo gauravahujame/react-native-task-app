@@ -44,7 +44,6 @@ export default class CreateTaskActionSheet extends React.Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}>
                     <TextInput
                         placeholder="Remind me to"
-                        autoFocus
                         value={title}
                         selectionColor={taskColor}
                         style={{ flex: 1, fontSize: 22, fontWeight: '600', color: 'black' }}

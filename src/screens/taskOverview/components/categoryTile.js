@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, StatusBar, TextInput, StyleSheet, Animated, Easing, Dimensions, FlatList, TouchableOpacity } from 'react-native';
-import { Text, Icon, Button, Divider } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
+import { View, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { Text, Divider } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
-import _ from 'lodash';
 
 import TaskItemSmall from '../components/taskItemSmall';
-import { inject, observer } from 'mobx-react/native';
 
 export default class CategoryTile extends React.Component {
     static navigationOptions = {
@@ -24,7 +21,7 @@ export default class CategoryTile extends React.Component {
         const { navigation } = this.props;
         const { id, title, color, tasks } = this.props.item;
         const totalCount = tasks ? tasks.length : 0;
-        const pendingTasks = tasks ? tasks.filter(item => item.completed === false) : [];
+        const pendingTasks = tasks.length ? tasks.filter(item => item.completed === false) : [];
         const pendingCount = pendingTasks.length || 0;
         return (
             <View>
@@ -42,6 +39,7 @@ export default class CategoryTile extends React.Component {
                         width: tileSize,
                         backgroundColor: 'white',
                         marginHorizontal: 20,
+                        margin: 5,
                         padding: 20,
                         justifyContent: 'flex-end',
                         borderRadius: 5,

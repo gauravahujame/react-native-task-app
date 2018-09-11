@@ -1,7 +1,6 @@
 // import { create } from 'mobx-persist';
 import { AsyncStorage } from 'react-native';
 
-import TaskStore from './tasks';
 import ListStore from './lists';
 import AppStore from './app';
 
@@ -9,7 +8,6 @@ import AppStore from './app';
 
 const stores = {
   appStore: new AppStore(),
-  taskStore: new TaskStore(),   // Check if we can pass stores through contructors
   listStore: new ListStore(),
 }
 

@@ -1,8 +1,7 @@
-import { observable, action, computed, toJS } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import uuid from 'uuid';
 
 import ListModel from '../models/list';
-import TaskModel from '../models/task';
 import { lists } from '../index';
 
 

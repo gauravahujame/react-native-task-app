@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, StatusBar, StyleSheet, FlatList } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Text, Icon, Avatar } from 'react-native-elements';
 import { inject, observer } from 'mobx-react/native';
 import _ from 'lodash';
-
+import { colorLuminance } from '../../utils/color';
 import CategoryTile from './components/categoryTile';
 import AddTile from './components/addTile';
 
@@ -32,11 +33,14 @@ class TaskOverviewScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
+        const { activeColor } = this.state;
         const { lists } = this.props.listStore;
         const { user } = this.props.appStore;
 
         return (
-            <View style={{ flex: 1, backgroundColor: this.state.activeColor }}>
+            <LinearGradient
+                colors={[ activeColor, colorLuminance(activeColor, 0.4) ]}
+                style={{ flex: 1 }}>
                 <StatusBar
                     hidden
                     barStyle="light-content"
@@ -76,7 +80,7 @@ class TaskOverviewScreen extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => <CategoryTile item={item} navigation={navigation} />} />
                 </View>
-            </View>
+            </LinearGradient>
         );
     }
 }
